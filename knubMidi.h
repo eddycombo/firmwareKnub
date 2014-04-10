@@ -52,7 +52,7 @@ void midiInRead(){
 				//we have a valid PC message change preset accordingly
 
 				readindx = inMessage[1]+5;
-				readAdr = readindx*presetSize;
+				readAdr = ((readindx - baseAddr)*presetSize)+baseAddr;
 			
 			
 				if(readindx<13 && readAdr != prevRead && loadFlag == false){
@@ -145,7 +145,7 @@ void doSwitchInDec(){
 	
 				if(readindx < 12){
 					readindx += 1;
-					readAdr = readindx*presetSize;
+					readAdr = ((readindx-baseAddr)*presetSize)+baseAddr;
 				}
 
 				if(readAdr != prevRead && loadFlag == false){

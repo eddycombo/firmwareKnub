@@ -39,6 +39,9 @@ uint8_t txtParamIndx = 0;
 uint8_t lastMSB = 0;
 uint8_t lastLSB = 0;
 
+uint16_t baseID;
+
+
 char valBuf[4];
 
 ClickButton bValid(validBut, LOW, CLICKBTN_PULLUP);
@@ -75,6 +78,9 @@ uint16_t expVal;
 
 void setup(){
   
+  baseID = 5;
+
+
   Wire.begin();
   
   lcd.init();
@@ -115,7 +121,7 @@ void setup(){
   //read last loaded ID and load that one
   lastID = 5;
   
-  readKnubPreset(eepromAddr1, lastID * presetSize, &currentPreset);
+  readKnubPreset(eepromAddr1, ((lastID-baseID) * presetSize)+baseID, &currentPreset);
   
   delay(50);
   
@@ -263,7 +269,7 @@ void loop(){
 
         if(readindx < 12){
           readindx += 1;
-          readAdr = readindx*presetSize;
+          readAdr = ((readindx-baseID)*presetSize)+baseAddr;
         }
 
         if(readAdr != prevRead && loadFlag == false){
@@ -357,7 +363,7 @@ void loop(){
 
           if(readindx > 5){
           readindx -=1;
-          readAdr = readindx*presetSize;
+          readAdr = ((readindx-baseID)*presetSize)+baseAddr;
         }
 
         if(readAdr != prevRead && loadFlag == false){
