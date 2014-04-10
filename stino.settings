@@ -1,0 +1,10 @@
+{
+    "arduino_folder": "/home/ekko/Appz/arduino-1.0.1", 
+    "board": 3, 
+    "full_compilation": false, 
+    "platform": 1, 
+    "programmer": {
+        "1": 1
+    }, 
+    "serial_port": 0
+}

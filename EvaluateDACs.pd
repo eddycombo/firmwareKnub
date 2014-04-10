@@ -1,0 +1,200 @@
+#N canvas 81 78 1351 645 10;
+#X declare -lib mrpeach;
+#X obj 34 174 hsl 255 40 0 255 0 1 slid1 auto1 slid1 -2 -8 0 10 -262144
+-1 -1 11700 1;
+#X obj 29 9 bng 50 250 50 0 connect empty connect_to_knub 60 7 0 10
+-262144 -1 -1;
+#X obj 277 10 bng 50 250 50 0 disconnect empty disconnect 60 7 0 10
+-262144 -1 -1;
+#X obj 496 12 tgl 50 0 empty connected connected 60 7 0 10 -262144
+-1 -1 0 1;
+#N canvas 389 93 672 435 auto1 0;
+#X obj 67 228 line;
+#X obj 118 142 i;
+#X obj 133 120 r duration1;
+#X obj 269 139 bng 15 250 50 0 do1 empty empty 17 7 0 10 -262144 -1
+-1;
+#X obj 41 38 r do1;
+#X obj 67 276 s auto1;
+#X obj 67 253 i;
+#X obj 251 113 nbx 5 14 -1e+37 1e+37 0 0 duration1 empty empty 0 -8
+0 11 -262144 -1 -1 0 256;
+#X obj 47 140 i 0;
+#X obj 76 141 i 255;
+#X obj 67 79 t b b b;
+#X obj 58 177 pack i i i;
+#X msg 67 203 \$1 \, \$2 \$3;
+#X connect 0 0 6 0;
+#X connect 1 0 11 2;
+#X connect 2 0 1 1;
+#X connect 4 0 10 0;
+#X connect 6 0 5 0;
+#X connect 8 0 11 0;
+#X connect 9 0 11 1;
+#X connect 10 0 8 0;
+#X connect 10 1 9 0;
+#X connect 10 2 1 0;
+#X connect 11 0 12 0;
+#X connect 12 0 0 0;
+#X coords 0 -1 1 1 87 108 1 235 70;
+#X restore 28 507 pd auto1;
+#N canvas 217 105 864 638 guts 0;
+#X obj 15 18 import mrpeach;
+#X msg 234 127 disconnect;
+#N canvas 342 170 698 486 gutsy 0;
+#X obj 220 274 packOSC;
+#X obj 97 38 r slid1;
+#X obj 169 94 r slid2;
+#X obj 85 366 udpsend;
+#X obj 85 320 inlet;
+#X obj 104 342 inlet;
+#X obj 85 390 outlet;
+#X obj 389 277 r dacMin;
+#X msg 389 297 sendtyped /dac/minVal i \$1;
+#X obj 393 360 r dacMax;
+#X msg 392 388 sendtyped /dac/maxVal i \$1;
+#X msg 229 192 send /lut/calc;
+#X obj 229 170 r calc;
+#X msg 169 118 sendtyped /dac/cvC i \$1;
+#X msg 97 62 sendtyped /dac/cvA i \$1;
+#X connect 0 0 3 0;
+#X connect 1 0 14 0;
+#X connect 2 0 13 0;
+#X connect 3 0 6 0;
+#X connect 4 0 3 0;
+#X connect 5 0 3 0;
+#X connect 7 0 8 0;
+#X connect 8 0 0 0;
+#X connect 9 0 10 0;
+#X connect 10 0 0 0;
+#X connect 11 0 0 0;
+#X connect 12 0 11 0;
+#X connect 13 0 0 0;
+#X connect 14 0 0 0;
+#X restore 91 155 pd gutsy;
+#X obj 72 104 r connect;
+#X obj 234 105 r disconnect;
+#X obj 91 180 s connected;
+#X msg 81 321 devices;
+#X obj 145 298 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 11
+-262144 -1 -1 32 256;
+#X msg 145 322 open \$1;
+#X msg 208 321 close;
+#X obj 115 380 comport 9600;
+#X obj 145 274 i 32;
+#X obj 145 246 r connect;
+#X obj 208 295 r disconnect;
+#X obj 625 417 r slid1;
+#X obj 498 384 r vacval;
+#X obj 562 330 r orig;
+#X msg 562 359 set O_;
+#X obj 562 440 tabwrite 0_;
+#X obj 616 331 r new;
+#X msg 616 360 set _N;
+#X obj 115 405 s vacval;
+#X obj 673 438 r slid2;
+#X msg 72 125 connect 192.168.144.23 10000;
+#X connect 1 0 2 0;
+#X connect 2 0 5 0;
+#X connect 3 0 23 0;
+#X connect 4 0 1 0;
+#X connect 6 0 10 0;
+#X connect 7 0 8 0;
+#X connect 8 0 10 0;
+#X connect 9 0 10 0;
+#X connect 10 0 21 0;
+#X connect 11 0 7 0;
+#X connect 12 0 11 0;
+#X connect 13 0 9 0;
+#X connect 14 0 18 1;
+#X connect 15 0 18 0;
+#X connect 16 0 17 0;
+#X connect 17 0 18 0;
+#X connect 19 0 20 0;
+#X connect 20 0 18 0;
+#X connect 22 0 18 1;
+#X connect 23 0 2 0;
+#X restore 682 621 pd guts;
+#X obj 32 231 nbx 5 30 -1e+37 1e+37 0 0 empty vacval empty 0 -8 0 20
+-262144 -1 -1 10 256;
+#X obj 30 103 nbx 10 30 -1e+37 1e+37 0 0 dacMin empty empty 0 -8 0
+20 -262144 -1 -1 0 256;
+#X obj 234 103 nbx 10 30 -1e+37 1e+37 0 0 dacMax empty empty 0 -8 0
+20 -262144 -1 -1 0 256;
+#X text 28 83 DAC MIN;
+#X text 232 81 DAC MAX;
+#N canvas 0 0 450 300 (subpatch) 0;
+#X array _N 255 float 5;
+#A 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0;
+#X coords 0 255 254 0 301 253 1 0 0;
+#X restore 712 201 graph;
+#X text 143 237 VACTROL A;
+#X obj 38 322 hsl 255 40 0 255 0 1 slid2 auto2 slid2 -2 -8 0 10 -262144
+-1 -1 25400 1;
+#X obj 36 379 nbx 5 30 -1e+37 1e+37 0 0 vacval2 vactrol2 empty 0 -8
+0 20 -262144 -1 -1 0 256;
+#X text 147 385 VACTROL B;
+#N canvas 393 91 672 435 auto2 0;
+#X obj 67 228 line;
+#X obj 118 142 i;
+#X obj 269 139 bng 15 250 50 0 do2 empty empty 17 7 0 10 -262144 -1
+-1;
+#X obj 67 253 i;
+#X obj 251 113 nbx 5 14 -1e+37 1e+37 0 0 duration2 empty empty 0 -8
+0 11 -262144 -1 -1 0 256;
+#X obj 47 140 i 0;
+#X obj 76 141 i 255;
+#X obj 67 79 t b b b;
+#X obj 58 177 pack i i i;
+#X msg 67 203 \$1 \, \$2 \$3;
+#X obj 67 275 s auto2;
+#X obj 133 120 r duration2;
+#X obj 67 53 r do2;
+#X connect 0 0 3 0;
+#X connect 1 0 8 2;
+#X connect 3 0 10 0;
+#X connect 5 0 8 0;
+#X connect 6 0 8 1;
+#X connect 7 0 5 0;
+#X connect 7 1 6 0;
+#X connect 7 2 1 0;
+#X connect 8 0 9 0;
+#X connect 9 0 0 0;
+#X connect 11 0 1 1;
+#X connect 12 0 7 0;
+#X coords 0 -1 1 1 87 108 1 235 70;
+#X restore 137 508 pd auto2;
+#N canvas 0 0 450 300 (subpatch) 0;
+#X array O_ 255 float 5;
+#A 0 10 52 248 10 248 248 10 248 248 248 248 10 248 10 248 248 248
+248 248 10 10 248 248 248 10 10 248 248 10 248 248 248 248 10 10 248
+248 248 248 248 248 10 248 127 248 248 248 10 248 10 10 10 52 248 248
+10 248 248 10 13 10 52 248 248 10 248 10 13 248 10 248 248 10 10 10
+10 248 10 10 13 248 248 248 10 10 10 10 52 10 10 52 10 56 56 10 56
+10 10 10 56 56 10 10 10 10 10 52 10 10 10 56 10 10 10 13 56 52 10 50
+10 56 10 50 10 10 10 10 10 10 10 248 248 10 248 10 56 56 10 10 10 52
+10 10 56 56 10 52 10 10 56 52 13 10 10 56 52 56 52 10 10 10 248 10
+10 56 13 13 56 10 10 52 52 13 10 52 10 10 10 10 52 10 52 10 10 10 10
+56 56 10 13 56 52 10 52 10 10 56 50 10 52 10 10 56 56 13 10 10 56 248
+10 10 10 10 10 10 248 10 248 52 56 10 10 52 52 10 52 10 10 56 10 10
+248 10 56 10 10 10 10 10 10 52 56 248 13 10 52 56 248 13 52 10 248
+10 10 10;
+#X coords 0 255 254 0 301 253 1 0 0;
+#X restore 405 200 graph;
+#X obj 27 478 bng 15 250 50 0 orig empty orig 17 7 0 10 -262144 -1
+-1;
+#X obj 79 478 bng 15 250 50 0 new empty new 17 7 0 10 -262144 -1 -1
+;
+#X msg 424 527 \; O_ const 0;
+#X msg 423 566 \; _N const 0;
+#X obj 544 140 bng 15 250 50 0 calc empty calc 17 7 0 10 -262144 -1
+-1;
+#X obj 602 140 bng 15 250 50 0 give empty give 17 7 0 10 -262144 -1
+-1;
